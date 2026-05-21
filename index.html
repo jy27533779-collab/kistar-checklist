@@ -249,6 +249,17 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--navy);min-height:100
   cursor:pointer;transition:all .15s;
 }
 .logout-btn:hover{background:rgba(200,57,43,.15);border-color:rgba(200,57,43,.4);color:#f08070}
+
+.dept-btn.disabled{
+  opacity:.28;
+  cursor:not-allowed;
+  pointer-events:none;
+  filter:grayscale(.6);
+}
+.dept-btn.disabled:hover{
+  transform:none;
+  box-shadow:none;
+}
 </style>
 </head>
 <body>
@@ -376,7 +387,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--navy);min-height:100
     </ul>
 
     <div class="dept-list">
-      <a href="checklist_mseng_simple.html" class="dept-btn mseng">
+      <a href="checklist_mseng_simple.html" class="dept-btn mseng" id="btn-mseng">
         <div class="dept-icon">🔬</div>
         <div class="dept-text">
           <div class="dept-name">신소재공학부</div>
@@ -385,7 +396,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--navy);min-height:100
         <span class="dept-badge">주관학과</span>
         <span class="dept-arr">›</span>
       </a>
-      <a href="checklist_ee_new.html" class="dept-btn ee">
+      <a href="checklist_ee_new.html" class="dept-btn ee" id="btn-ee">
         <div class="dept-icon">⚡</div>
         <div class="dept-text">
           <div class="dept-name">전기전자공학부</div>
@@ -393,7 +404,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--navy);min-height:100
         </div>
         <span class="dept-arr">›</span>
       </a>
-      <a href="checklist_cbe_new.html" class="dept-btn cbe">
+      <a href="checklist_cbe_new.html" class="dept-btn cbe" id="btn-cbe">
         <div class="dept-icon">⚗️</div>
         <div class="dept-text">
           <div class="dept-name">화공생명공학과</div>
@@ -401,7 +412,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--navy);min-height:100
         </div>
         <span class="dept-arr">›</span>
       </a>
-      <a href="checklist_me_new.html" class="dept-btn me">
+      <a href="checklist_me_new.html" class="dept-btn me" id="btn-me">
         <div class="dept-icon">⚙️</div>
         <div class="dept-text">
           <div class="dept-name">기계공학부</div>
@@ -409,7 +420,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--navy);min-height:100
         </div>
         <span class="dept-arr">›</span>
       </a>
-      <a href="checklist_phys_new.html" class="dept-btn phys">
+      <a href="checklist_phys_new.html" class="dept-btn phys" id="btn-phys">
         <div class="dept-icon">🔭</div>
         <div class="dept-text">
           <div class="dept-name">물리학과</div>
@@ -517,6 +528,32 @@ function doAuth() {
     const btn = document.getElementById('logout-btn');
     if (btn) btn.style.display = 'flex';
   }
+
+  // 학생 로그인 시 본인 학과 외 버튼 비활성화
+  (function() {
+    try {
+      const auth = JSON.parse(localStorage.getItem('kistar_auth') || 'null');
+      if (!auth || auth.isStaff) return; // 교직원이면 모두 활성화
+
+      const DEPT_MAP = {
+        '신소재공학부':  'mseng',
+        '전기전자공학부': 'ee',
+        '화공생명공학과': 'cbe',
+        '기계공학부':    'me',
+        '물리학과':     'phys',
+      };
+
+      const myCode = DEPT_MAP[auth.dept];
+      if (!myCode) return;
+
+      ['mseng','ee','cbe','me','phys'].forEach(code => {
+        if (code !== myCode) {
+          const btn = document.getElementById('btn-' + code);
+          if (btn) btn.classList.add('disabled');
+        }
+      });
+    } catch(e) {}
+  })();
 </script>
 
 </body>
