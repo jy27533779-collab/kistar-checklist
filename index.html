@@ -413,7 +413,6 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--navy);min-height:100
 <script>
 const EXEC_URL = 'https://script.google.com/macros/s/AKfycbwbcXNJ-g2nq9OGcYw2SVPp6U8ccymu4_PZjqUgtleXEQVmKD35s3p7SvCpAmR4P0mH/exec';
 
-// 엔터키 지원
 document.getElementById('auth-id').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('auth-birth').focus(); });
 document.getElementById('auth-birth').addEventListener('keydown', e => { if(e.key==='Enter') doAuth(); });
 
@@ -428,7 +427,7 @@ function doAuth() {
     msg.textContent = '학번과 생년월일을 모두 입력해주세요.';
     return;
   }
-  if (birth.length !== 8 || !/^\d{8}$/.test(birth)) {
+  if (birth.length !== 8 || !/^[0-9]{8}$/.test(birth)) {
     msg.className = 'auth-msg error';
     msg.textContent = '생년월일은 8자리 숫자로 입력해주세요. (예: 20010315)';
     return;
@@ -439,40 +438,29 @@ function doAuth() {
   msg.textContent = '확인 중...';
 
   const url = EXEC_URL + '?action=verify&studentId=' + encodeURIComponent(sid) + '&birthDate=' + encodeURIComponent(birth);
-  const iframe = document.createElement('iframe');
-  iframe.style.display = 'none';
-  document.body.appendChild(iframe);
-  iframe.src = url;
-  iframe.onload = () => {
-    try {
-      const text = iframe.contentDocument.body.innerText;
-      const result = JSON.parse(text);
+
+  fetch(url)
+    .then(r => r.json())
+    .then(result => {
       if (result.status === 'ok') {
         msg.className = 'auth-msg';
         msg.style.color = '#1abaac';
         msg.textContent = result.name + '님, 환영합니다!';
+        sessionStorage.setItem('kistar_auth', JSON.stringify({name: result.name, dept: result.dept}));
         setTimeout(() => {
           document.getElementById('auth-overlay').classList.add('hidden');
-          document.body.removeChild(iframe);
         }, 800);
       } else {
         msg.className = 'auth-msg error';
         msg.textContent = '학번 또는 생년월일이 일치하지 않습니다.';
         btn.disabled = false;
       }
-    } catch(e) {
+    })
+    .catch(() => {
       msg.className = 'auth-msg error';
       msg.textContent = '오류가 발생했습니다. 다시 시도해주세요.';
       btn.disabled = false;
-    }
-    if(iframe.parentNode) document.body.removeChild(iframe);
-  };
-  iframe.onerror = () => {
-    msg.className = 'auth-msg error';
-    msg.textContent = '네트워크 오류입니다. 다시 시도해주세요.';
-    btn.disabled = false;
-    if(iframe.parentNode) document.body.removeChild(iframe);
-  };
+    });
 }
 </script>
 
