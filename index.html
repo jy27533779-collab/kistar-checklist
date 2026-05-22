@@ -262,7 +262,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--navy);min-height:100
 }
 
 .admin-btn{
-  display:none;align-items:center;gap:6px;
+  display:flex;align-items:center;gap:6px;
   padding:8px 16px;border-radius:8px;
   background:linear-gradient(135deg,rgba(200,57,43,.25),rgba(200,57,43,.15));
   border:1px solid rgba(200,57,43,.45);
@@ -566,6 +566,8 @@ function doAuth() {
         if (auth.isAdmin) {
           const adminWrap = document.getElementById('admin-btn-wrap');
           if (adminWrap) adminWrap.style.display = 'block';
+          const adminBtn = document.getElementById('admin-btn');
+          if (adminBtn) adminBtn.style.display = 'flex';
         }
       }
     } catch(e) {}
