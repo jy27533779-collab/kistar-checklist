@@ -260,6 +260,18 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--navy);min-height:100
   transform:none;
   box-shadow:none;
 }
+
+.admin-btn{
+  display:none;align-items:center;gap:6px;
+  padding:8px 16px;border-radius:8px;
+  background:linear-gradient(135deg,rgba(200,57,43,.25),rgba(200,57,43,.15));
+  border:1px solid rgba(200,57,43,.45);
+  color:#f08070;font-size:12px;font-weight:700;
+  font-family:'Noto Sans KR',sans-serif;
+  cursor:pointer;transition:all .18s;text-decoration:none;
+  white-space:nowrap;
+}
+.admin-btn:hover{background:linear-gradient(135deg,rgba(200,57,43,.4),rgba(200,57,43,.25));border-color:rgba(200,57,43,.7);color:#fff}
 </style>
 </head>
 <body>
@@ -389,6 +401,19 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--navy);min-height:100
       <li><span class="dot">·</span><span>이수 과목 체크 후 현황 제출</span></li>
     </ul>
 
+    
+    <!-- 관리자 모드 버튼 (admin 계정만 표시) -->
+    <div id="admin-btn-wrap" style="display:none;margin-bottom:10px;">
+      <a href="admin.html" class="admin-btn" id="admin-btn">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+          <circle cx="6.5" cy="4.5" r="2.5" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M1.5 11c0-2.485 2.239-4.5 5-4.5s5 2.015 5 4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          <path d="M9.5 8.5l1.5 1.5-1.5 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        관리자 모드
+      </a>
+    </div>
+
     <div class="dept-list">
       <a href="checklist_mseng_simple.html" class="dept-btn mseng" id="btn-mseng">
         <div class="dept-icon">🔬</div>
@@ -485,7 +510,9 @@ function doAuth() {
           name: result.name,
           dept: result.dept,
           studentId: sid,
-          isStaff: result.dept === '차세대AI반도체특성화대학사업단'
+          role: result.role || '',
+          isAdmin: result.isAdmin || false,
+          isStaff: result.isStaff || result.dept === '차세대AI반도체특성화대학사업단'
         }));
         setTimeout(() => {
           document.getElementById('auth-overlay').classList.add('hidden');
@@ -535,6 +562,11 @@ function doAuth() {
       if (auth && auth.name) {
         const badge = document.getElementById('user-name-badge');
         if (badge) badge.textContent = auth.name + '님';
+        // admin 버튼 표시
+        if (auth.isAdmin) {
+          const adminWrap = document.getElementById('admin-btn-wrap');
+          if (adminWrap) adminWrap.style.display = 'block';
+        }
       }
     } catch(e) {}
     bar.style.display = 'flex';
