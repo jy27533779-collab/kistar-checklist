@@ -519,31 +519,41 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
       <!-- 합계박스 중심: x=270+(264/2)=402, 수평선 중심: (90+714)/2=402 → 완벽 일치 -->
 
       <!-- [1] 전공트랙 -->
-      <rect x="20" y="32" width="140" height="62" rx="7" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="0.8"/>
+      <rect id="diag-rect-s1" style="transition:fill .4s,stroke .4s" x="20" y="32" width="140" height="62" rx="7" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="0.8"/>
+      <circle id="diag-rect-s1-chk" cx="153" cy="37" r="9" fill="#2d7a4f" opacity="0" style="transition:opacity .3s"/>
+      <path id="diag-rect-s1-path" d="M148 37l3.5 3.5L158 32" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0" style="transition:opacity .3s"/>
       <text x="90" y="46" text-anchor="middle" font-size="10" font-weight="700" fill="#534AB7" font-family="Noto Sans KR,sans-serif">[1]</text>
       <text x="90" y="68" text-anchor="middle" font-size="12" font-weight="700" fill="#3C3489" font-family="Noto Sans KR,sans-serif">전공트랙</text>
       <text x="90" y="83" text-anchor="middle" font-size="9" fill="#7F77DD" font-family="Noto Sans KR,sans-serif">12학점 · 4개 트랙 각 1과목</text>
 
       <!-- [2] 공동운영 -->
-      <rect x="172" y="32" width="140" height="62" rx="7" fill="#EAF3DE" stroke="#97C459" stroke-width="0.8"/>
+      <rect id="diag-rect-s2" style="transition:fill .4s,stroke .4s" x="172" y="32" width="140" height="62" rx="7" fill="#EAF3DE" stroke="#97C459" stroke-width="0.8"/>
+      <circle id="diag-rect-s2-chk" cx="305" cy="37" r="9" fill="#2d7a4f" opacity="0" style="transition:opacity .3s"/>
+      <path id="diag-rect-s2-path" d="M300 37l3.5 3.5L310 32" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0" style="transition:opacity .3s"/>
       <text x="242" y="46" text-anchor="middle" font-size="10" font-weight="700" fill="#3B6D11" font-family="Noto Sans KR,sans-serif">[2]</text>
       <text x="242" y="68" text-anchor="middle" font-size="12" font-weight="700" fill="#27500A" font-family="Noto Sans KR,sans-serif">공동운영</text>
       <text x="242" y="83" text-anchor="middle" font-size="9" fill="#639922" font-family="Noto Sans KR,sans-serif">6학점 · AI반도체개론 필수</text>
 
       <!-- [3] 산학연계 -->
-      <rect x="324" y="32" width="140" height="62" rx="7" fill="#FBEAF0" stroke="#ED93B1" stroke-width="0.8"/>
+      <rect id="diag-rect-s3" style="transition:fill .4s,stroke .4s" x="324" y="32" width="140" height="62" rx="7" fill="#FBEAF0" stroke="#ED93B1" stroke-width="0.8"/>
+      <circle id="diag-rect-s3-chk" cx="457" cy="37" r="9" fill="#2d7a4f" opacity="0" style="transition:opacity .3s"/>
+      <path id="diag-rect-s3-path" d="M452 37l3.5 3.5L462 32" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0" style="transition:opacity .3s"/>
       <text x="394" y="46" text-anchor="middle" font-size="10" font-weight="700" fill="#993556" font-family="Noto Sans KR,sans-serif">[3]</text>
       <text x="394" y="68" text-anchor="middle" font-size="12" font-weight="700" fill="#72243E" font-family="Noto Sans KR,sans-serif">산학연계</text>
       <text x="394" y="83" text-anchor="middle" font-size="9" fill="#D4537E" font-family="Noto Sans KR,sans-serif">6학점 · PBL + 콜로키움 각 1</text>
 
       <!-- [4] 자유이수 -->
-      <rect x="476" y="32" width="140" height="62" rx="7" fill="#FAEEDA" stroke="#EF9F27" stroke-width="0.8"/>
+      <rect id="diag-rect-s4" style="transition:fill .4s,stroke .4s" x="476" y="32" width="140" height="62" rx="7" fill="#FAEEDA" stroke="#EF9F27" stroke-width="0.8"/>
+      <circle id="diag-rect-s4-chk" cx="609" cy="37" r="9" fill="#2d7a4f" opacity="0" style="transition:opacity .3s"/>
+      <path id="diag-rect-s4-path" d="M604 37l3.5 3.5L614 32" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0" style="transition:opacity .3s"/>
       <text x="546" y="46" text-anchor="middle" font-size="10" font-weight="700" fill="#854F0B" font-family="Noto Sans KR,sans-serif">[4]</text>
       <text x="546" y="68" text-anchor="middle" font-size="12" font-weight="700" fill="#633806" font-family="Noto Sans KR,sans-serif">자유이수</text>
       <text x="546" y="83" text-anchor="middle" font-size="9" fill="#BA7517" font-family="Noto Sans KR,sans-serif">6학점 · 융합전공 운영 과목</text>
 
       <!-- [5] 학부인정 -->
-      <rect x="628" y="32" width="172" height="62" rx="7" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="0.8"/>
+      <rect id="diag-rect-s5" style="transition:fill .4s,stroke .4s" x="628" y="32" width="172" height="62" rx="7" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="0.8"/>
+      <circle id="diag-rect-s5-chk" cx="793" cy="37" r="9" fill="#2d7a4f" opacity="0" style="transition:opacity .3s"/>
+      <path id="diag-rect-s5-path" d="M788 37l3.5 3.5L798 32" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0" style="transition:opacity .3s"/>
       <text x="714" y="46" text-anchor="middle" font-size="10" font-weight="700" fill="#5F5E5A" font-family="Noto Sans KR,sans-serif">[5]</text>
       <text x="714" y="68" text-anchor="middle" font-size="12" font-weight="700" fill="#444441" font-family="Noto Sans KR,sans-serif">학부인정</text>
       <text x="714" y="83" text-anchor="middle" font-size="9" fill="#888780" font-family="Noto Sans KR,sans-serif">최대 6학점 · 기이수 전공 중복인정</text>
@@ -989,8 +999,26 @@ function toggleDiagram() { toggleDiag(1); }
 </div>
 
 <div class="footer">
-  <p>차세대AI반도체특성화대학사업단 · ☎ 02-3290-4988 · kistar.korea.ac.kr</p>
+  <p style="display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px 16px;margin-bottom:6px">
+    <span>차세대AI반도체특성화대학사업단</span>
+    <span style="opacity:.35">·</span>
+    <span>☎ 02-3290-4988</span>
+    <span style="opacity:.35">·</span>
+    <span style="display:inline-flex;align-items:center;gap:4px">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="2.5" width="10" height="7.5" rx="1.5" stroke="currentColor" stroke-width="1.1"/><path d="M1 4l5 3.5L11 4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+      <a href="mailto:kistar@korea.ac.kr" style="color:inherit;text-decoration:none">kistar@korea.ac.kr</a>
+    </span>
+    <span style="opacity:.35">·</span>
+    <span style="display:inline-flex;align-items:center;gap:4px">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.1"/><path d="M1 6h10M6 1a7 7 0 0 1 0 10M6 1a7 7 0 0 0 0 10" stroke="currentColor" stroke-width="1.1"/></svg>
+      <a href="https://kistar.korea.ac.kr" target="_blank" style="color:inherit;text-decoration:none">kistar.korea.ac.kr</a>
+    </span>
+  </p>
   <p style="margin-top:4px">※ 본 체크리스트는 이수 현황 확인용이며, 공식 인정은 <strong>차세대AI반도체특성화대학사업단(차세대반도체 융합전공)</strong>의 확인이 필요합니다.</p>
+  <p style="margin-top:8px;font-size:10px;color:var(--text3,#9a9890);border-top:0.5px solid var(--border,#dddbd3);padding-top:8px">
+    © 고려대학교 차세대AI반도체특성화대학사업단. All rights reserved.<br>
+    본 체크리스트의 저작권은 고려대학교 차세대AI반도체특성화대학사업단에 있습니다. 무단 복제·배포·공유를 금합니다.
+  </p>
 </div>
 
 <!-- 플로팅 상태 카드 -->
@@ -1767,6 +1795,12 @@ function toggleDiagram() { toggleDiag(1); }
     // 자동 저장
     saveState();
   
+  // 다이어그램 충족 시각화
+  updateDiagBox('s1', allOk1);
+  updateDiagBox('s2', gd6);
+  updateDiagBox('s3', pbl4ok);
+  updateDiagBox('s4', c5>=6);
+  updateDiagBox('s5', c3>=6);
   saveState(); // localStorage 자동 저장
   }
 
@@ -2005,6 +2039,26 @@ function toggleDiagram() { toggleDiag(1); }
   function doLogoutChecklist() {
     localStorage.removeItem('kistar_auth');
     window.location.href = './';
+  }
+
+  // ── 다이어그램 충족 시각화 ──
+  const DIAG_ORIG = {
+    's1': {fill:'#EEEDFE', stroke:'#AFA9EC'},
+    's2': {fill:'#EAF3DE', stroke:'#97C459'},
+    's3': {fill:'#FBEAF0', stroke:'#ED93B1'},
+    's4': {fill:'#FAEEDA', stroke:'#EF9F27'},
+    's5': {fill:'#F1EFE8', stroke:'#B4B2A9'},
+  };
+  function updateDiagBox(id, isOk) {
+    const rect = document.getElementById('diag-rect-' + id);
+    const chk  = document.getElementById('diag-rect-' + id + '-chk');
+    const path = document.getElementById('diag-rect-' + id + '-path');
+    if (!rect) return;
+    const orig = DIAG_ORIG[id];
+    rect.setAttribute('fill',   isOk ? '#c8f0d8' : orig.fill);
+    rect.setAttribute('stroke', isOk ? '#2d7a4f' : orig.stroke);
+    if (chk)  chk.setAttribute('opacity',  isOk ? '1' : '0');
+    if (path) path.setAttribute('opacity', isOk ? '1' : '0');
   }
 </script>
 
