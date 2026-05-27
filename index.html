@@ -509,7 +509,7 @@ function doAuth() {
   msg.className = 'auth-msg loading';
   msg.textContent = '확인 중...';
 
-  const url = EXEC_URL + '?action=verify&studentId=' + encodeURIComponent(sid) + '&birthDate=' + encodeURIComponent(birth);
+  const url = EXEC_URL + '?action=verify&studentId=' + encodeURIComponent(sid) + '&birthDate=' + encodeURIComponent(birth) + '&userAgent=' + encodeURIComponent(navigator.userAgent);
 
   fetch(url)
     .then(r => r.json())
