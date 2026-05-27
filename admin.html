@@ -750,7 +750,26 @@ function renderChecklist(dept, wrap) {
     <div class="course-row readonly-free" id="row-gd2-free" style="display:none">${roChk()}${tag('인')}<span class="course-name">진공장비실습 <span class="reflected-tag">자유이수 반영됨</span></span>${cred(3)}</div>
     <div class="course-row readonly-free" id="row-gd3-free" style="display:none">${roChk()}${tag('인')}<span class="course-name">반도체머신러닝 <span class="reflected-tag">자유이수 반영됨</span></span>${cred(3)}</div>
   </div>
-</div>`;
+</div>
+<!-- [5] 학부인정 -->
+<div class="section s3" id="${dept}-sec5">
+  <div class="section-header" onclick="toggleSection('${dept}-sec5')">
+    <div class="section-title"><div class="section-num">3</div>학부인정 교과목</div>
+    <div class="section-right">
+      <span class="section-status" id="${dept}-ss5">미충족</span>
+      <span class="section-credits" id="${dept}-cred5">0 / 6학점</span>
+      <span class="collapse-icon">▾</span>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="note-box">기이수 전공과목 중 <strong>최대 6학점까지</strong> 융합전공 학점으로 인정</div>
+    <div class="recog-cap-bar"><span>인정 학점</span><span id="recogCapLabel">0 / 6학점</span></div>
+    ${recog.map(c => `<div class="course-row" onclick="toggleRecog(this)" data-credit="3">${chk()}${tag(deptTag)}<span class="course-name">${c.name} <span class="course-sub">${c.sub}</span></span>${cred(3)}</div>`).join('')}
+  </div>
+</div>
+
+
+`;
 }
 
 // 초기 신소재 렌더링
@@ -1115,21 +1134,4 @@ function resetAll(){
 }
 </script>
 </body>
-</html><!-- [5] 학부인정 -->
-<div class="section s3" id="${dept}-sec5">
-  <div class="section-header" onclick="toggleSection('${dept}-sec5')">
-    <div class="section-title"><div class="section-num">3</div>학부인정 교과목</div>
-    <div class="section-right">
-      <span class="section-status" id="${dept}-ss5">미충족</span>
-      <span class="section-credits" id="${dept}-cred5">0 / 6학점</span>
-      <span class="collapse-icon">▾</span>
-    </div>
-  </div>
-  <div class="section-body">
-    <div class="note-box">기이수 전공과목 중 <strong>최대 6학점까지</strong> 융합전공 학점으로 인정</div>
-    <div class="recog-cap-bar"><span>인정 학점</span><span id="recogCapLabel">0 / 6학점</span></div>
-    ${recog.map(c => `<div class="course-row" onclick="toggleRecog(this)" data-credit="3">${chk()}${tag(deptTag)}<span class="course-name">${c.name} <span class="course-sub">${c.sub}</span></span>${cred(3)}</div>`).join('')}
-  </div>
-</div>
-
-
+</html>
