@@ -556,14 +556,7 @@ function submitForm() {
     }
   });
   if (warnings.length > 0) {
-    const msg = '다음 항목의 내용이 너무 짧습니다. 더 구체적으로 작성해주세요.
-
-'
-      + warnings.join('
-')
-      + '
-
-그래도 제출하시겠습니까?';
+    const msg = '다음 항목의 내용이 너무 짧습니다. 더 구체적으로 작성해주세요.\n\n' + warnings.join('\n') + '\n\n그래도 제출하시겠습니까?';
     if (!confirm(msg)) return;
   }
 
