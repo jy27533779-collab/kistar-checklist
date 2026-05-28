@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>결과보고서 제출 | KI-STAR 차세대반도체 융합전공</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f4f0;--surface:#fff;--surface2:#f0efe9;--border:#dddbd3;
+  --text:#1a1916;--text2:#6b6960;--text3:#9a9890;
+  --accent:#7B1F2A;--accent-light:#fdf0ee;
+  --navy:#0b1f3a;--teal:#1a7a6e;
+  --green:#2d7a4f;--green-light:#edf7f1;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:0 0 4rem}
+#access-denied{display:none;max-width:400px;margin:4rem auto;text-align:center;padding:2rem;background:var(--surface);border-radius:16px;border:1px solid var(--border)}
+.top-bar{background:rgba(11,31,58,0.95);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.top-bar-left{display:flex;align-items:center;gap:10px}
+.top-badge{font-size:10px;font-weight:700;background:var(--accent);color:#fff;padding:3px 8px;border-radius:4px}
+.top-title{font-size:13px;font-weight:600;color:#fff}
+.top-back{display:flex;align-items:center;gap:4px;color:rgba(255,255,255,.6);text-decoration:none;font-size:12px;transition:color .15s}
+.top-back:hover{color:#fff}
+.container{max-width:820px;margin:0 auto;padding:2rem 1rem}
+.doc-header{background:var(--surface);border:0.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:1.5rem}
+.doc-header-top{background:var(--navy);padding:1.5rem 2rem;text-align:center}
+.doc-title{font-family:'Noto Serif KR',serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:4px}
+.doc-subtitle{font-size:12px;color:rgba(255,255,255,.6)}
+.doc-meta{display:flex;justify-content:space-between;padding:12px 20px;border-bottom:0.5px solid var(--border);font-size:12px;color:var(--text2)}
+.form-section{background:var(--surface);border:0.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:1.25rem}
+.section-title{background:var(--navy);color:#fff;padding:12px 20px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px}
+.section-num{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.section-body{padding:16px 20px}
+.info-table{width:100%;border-collapse:collapse;font-size:13px}
+.info-table td{border:1px solid var(--border);padding:8px 12px}
+.info-table td:first-child,.info-table td:nth-child(3){background:var(--surface2);font-weight:600;width:80px;text-align:center;color:var(--text2)}
+.info-table input{width:100%;border:none;outline:none;font-size:13px;font-family:'Noto Sans KR',sans-serif;background:transparent;color:var(--text)}
+.field{margin-bottom:1.2rem}
+.field:last-child{margin-bottom:0}
+.field-label{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:6px;border-left:3px solid var(--navy);padding-left:8px}
+.field-hint{font-size:11px;color:var(--text3);font-weight:400}
+.field-textarea{width:100%;min-height:90px;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:13px;font-family:'Noto Sans KR',sans-serif;resize:vertical;background:var(--surface2);color:var(--text);outline:none;transition:border-color .15s;line-height:1.6}
+.field-textarea:focus{border-color:var(--navy);background:var(--surface)}
+.field-input{width:100%;border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:13px;font-family:'Noto Sans KR',sans-serif;background:var(--surface2);color:var(--text);outline:none}
+.field-input:focus{border-color:var(--navy);background:var(--surface)}
+
+/* 교과 활동 카드 */
+.course-card{background:var(--surface2);border:0.5px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px;position:relative}
+.course-card-title{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.del-card-btn{background:none;border:1px solid var(--border);border-radius:6px;color:var(--text3);cursor:pointer;font-size:11px;padding:3px 8px;font-family:'Noto Sans KR',sans-serif;transition:all .15s}
+.del-card-btn:hover{border-color:var(--accent);color:var(--accent)}
+.course-card-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.add-card-btn{display:flex;align-items:center;gap:5px;padding:8px 14px;border:1px dashed var(--border);border-radius:8px;background:transparent;color:var(--text3);font-size:12px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;transition:all .15s;margin-top:4px}
+.add-card-btn:hover{border-color:var(--navy);color:var(--navy)}
+
+/* 비교과 카드 */
+.extracurr-card{background:var(--surface2);border:0.5px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px}
+.extracurr-card-title{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+
+/* 제출 버튼 */
+.submit-area{background:var(--surface);border:0.5px solid var(--border);border-radius:12px;padding:20px;margin-top:1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.submit-note{font-size:12px;color:var(--text2);line-height:1.6}
+.btn-group{display:flex;gap:10px;flex-wrap:wrap}
+.btn-print{display:flex;align-items:center;gap:6px;padding:10px 20px;border:1.5px solid var(--border);border-radius:8px;background:var(--surface2);color:var(--text2);font-size:13px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;font-weight:500;transition:all .15s}
+.btn-print:hover{border-color:var(--navy);color:var(--navy)}
+.btn-submit{display:flex;align-items:center;gap:6px;padding:10px 24px;border:none;border-radius:8px;background:var(--navy);color:#fff;font-size:13px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;font-weight:700}
+.btn-submit:hover{opacity:.88}
+.submit-result{margin-top:10px;font-size:12px;padding:10px 14px;border-radius:8px;display:none;width:100%}
+.submit-result.show{display:block}
+.submit-result.success{background:var(--green-light);color:var(--green);border:0.5px solid #b7e4c7}
+.submit-result.error{background:var(--accent-light);color:var(--accent)}
+.form-footer{max-width:820px;margin:1.5rem auto 0;text-align:center;font-size:11px;color:var(--text3);padding:1rem 1rem 0;border-top:0.5px solid var(--border)}
+
+@media print{
+  .top-bar,.submit-area,.add-card-btn,.del-card-btn{display:none!important}
+  body{background:#fff;padding:0}
+  .container{padding:0}
+  .form-section,.doc-header{border:1px solid #ccc;margin-bottom:1rem;break-inside:avoid}
+  .doc-header-top,.section-title{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+@media(max-width:600px){
+  .course-card-grid{grid-template-columns:1fr}
+  .submit-area{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<div id="access-denied">
+  <p style="font-size:32px;margin-bottom:1rem">🔒</p>
+  <h2 style="font-size:18px;margin-bottom:.5rem">접근 권한 없음</h2>
+  <p style="font-size:13px;color:var(--text2);margin-bottom:1.5rem">관리자 계정으로 로그인 후 이용하세요.</p>
+  <a href="./" style="display:inline-block;padding:10px 24px;background:var(--navy);color:#fff;border-radius:8px;text-decoration:none;font-size:13px;font-weight:600">대문으로 돌아가기</a>
+</div>
+
+<div id="main-content" style="display:none">
+
+<div class="top-bar">
+  <div class="top-bar-left">
+    <span class="top-badge">관리자</span>
+    <span class="top-title">결과보고서 제출 (테스트용)</span>
+  </div>
+  <a href="./" class="top-back">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8 2L4 6l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    대문으로
+  </a>
+</div>
+
+<div class="container">
+
+<div class="doc-header">
+  <div class="doc-header-top">
+    <div class="doc-title">[차세대반도체 융합전공] 2026-1학기 결과보고서</div>
+    <div class="doc-subtitle">차세대AI반도체특성화대학사업단 · 차세대반도체 융합전공</div>
+  </div>
+  <div class="doc-meta">
+    <span>작성일: <span id="docDate"></span></span>
+    <span>작성자: <span id="docWriter"></span></span>
+  </div>
+</div>
+
+<!-- 1. 기본정보 -->
+<div class="form-section">
+  <div class="section-title"><div class="section-num">1</div>기본정보</div>
+  <div class="section-body">
+    <table class="info-table">
+      <tr>
+        <td>성 명</td><td><input type="text" id="f-name" placeholder="자동입력"></td>
+        <td>학 번</td><td><input type="text" id="f-id" placeholder="자동입력"></td>
+      </tr>
+      <tr>
+        <td>대 학</td><td><input type="text" id="f-univ" value="고려대학교" readonly style="color:var(--text3)"></td>
+        <td>학과(부)</td><td><input type="text" id="f-dept" placeholder="자동입력"></td>
+      </tr>
+      <tr>
+        <td>학 년</td><td><input type="text" id="f-grade" placeholder="예: 3학년"></td>
+        <td>학 기</td><td><input type="text" id="f-semester" value="2026학년도 1학기" readonly style="color:var(--text3)"></td>
+      </tr>
+      <tr>
+        <td>연락처</td><td><input type="text" id="f-phone" placeholder="010-0000-0000"></td>
+        <td>메 일</td><td><input type="text" id="f-email" placeholder="이메일 주소"></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- 2. 전공 이해 및 역량 변화 -->
+<div class="form-section">
+  <div class="section-title"><div class="section-num">2</div>전공 이해 및 역량 변화</div>
+  <div class="section-body">
+    <div class="field">
+      <div class="field-label">전공 이해도 <span class="field-hint">※ 전공 이해도 측면에서의 스스로에 대한 평가</span></div>
+      <textarea class="field-textarea" id="major-understanding" placeholder="차세대반도체 융합전공에 참여하면서 전공 이해도가 어떻게 변화했는지 작성해주세요." rows="4"></textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">실무 역량 <span class="field-hint">※ 실무 역량 측면에서의 스스로에 대한 평가</span></div>
+      <textarea class="field-textarea" id="practical-skill" placeholder="실무 역량 측면에서의 변화와 성장을 작성해주세요." rows="4"></textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">진로 인식 <span class="field-hint">※ 진로 인식 관점에서의 스스로에 대한 평가</span></div>
+      <textarea class="field-textarea" id="career-awareness" placeholder="진로 인식이 어떻게 변화했는지 작성해주세요." rows="4"></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- 3. 향후 학습 및 진로 계획 -->
+<div class="form-section">
+  <div class="section-title"><div class="section-num">3</div>향후 학습 및 진로 계획</div>
+  <div class="section-body">
+    <div class="field">
+      <div class="field-label">향후 학습 계획 <span class="field-hint">※ 차세대반도체 융합전공과 관련된 향후 학습 계획</span></div>
+      <textarea class="field-textarea" id="future-study" placeholder="향후 학습 계획을 구체적으로 작성해주세요." rows="4"></textarea>
+    </div>
+    <div class="field">
+      <div class="field-label">향후 진로 계획 <span class="field-hint">※ 향후 진로 방향과 차세대반도체 융합전공 이수가 본인에게 갖는 의미</span></div>
+      <textarea class="field-textarea" id="future-career" placeholder="향후 진로 방향과 융합전공 이수의 의미를 작성해주세요." rows="4"></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- 4. 활동 내용 -->
+<div class="form-section">
+  <div class="section-title"><div class="section-num">4</div>활동 내용</div>
+  <div class="section-body">
+
+    <!-- 교과 활동 -->
+    <div class="field">
+      <div class="field-label">① 교과 활동 <span class="field-hint">수강한 융합전공 과목별로 작성해주세요</span></div>
+      <div id="courseCards">
+        <!-- 기본 1개 -->
+        <div class="course-card">
+          <div class="course-card-title">
+            <span>교과 ① — <input type="text" style="border:none;border-bottom:1px solid var(--border);outline:none;font-size:13px;font-weight:700;color:var(--navy);background:transparent;width:180px;font-family:'Noto Sans KR',sans-serif" placeholder="교과목명 입력"></span>
+            <button class="del-card-btn" onclick="delCourseCard(this)">삭제</button>
+          </div>
+          <div class="course-card-grid">
+            <div class="field"><div class="field-label" style="border:none;padding:0">담당교원</div><input class="field-input" placeholder="담당교원명"></div>
+            <div class="field"><div class="field-label" style="border:none;padding:0">강의장소</div><input class="field-input" placeholder="강의장소"></div>
+            <div class="field"><div class="field-label" style="border:none;padding:0">강의시간</div><input class="field-input" placeholder="강의시간"></div>
+            <div class="field"><div class="field-label" style="border:none;padding:0">강의주제</div><input class="field-input" placeholder="강의주제"></div>
+          </div>
+          <div class="field"><div class="field-label" style="border:none;padding:0">강의수강 전·후 달라진 점 (직무 공부 관점)</div><textarea class="field-textarea" placeholder="수강 전과 후의 변화를 작성해주세요." rows="3"></textarea></div>
+          <div class="field"><div class="field-label" style="border:none;padding:0">한 학기 강의 요약 (새로 알게된 점)</div><textarea class="field-textarea" placeholder="한 학기 동안 배운 내용을 요약해주세요." rows="3"></textarea></div>
+        </div>
+      </div>
+      <button class="add-card-btn" onclick="addCourseCard()">+ 교과목 추가</button>
+    </div>
+
+    <!-- 비교과 활동 -->
+    <div class="field" style="margin-top:1.5rem">
+      <div class="field-label">② 비교과 활동 <span class="field-hint">참여한 비교과 프로그램별로 작성해주세요</span></div>
+      <div id="extraCards">
+        <div class="extracurr-card">
+          <div class="extracurr-card-title">
+            <span>비교과 ① — <input type="text" style="border:none;border-bottom:1px solid var(--border);outline:none;font-size:13px;font-weight:700;color:var(--accent);background:transparent;width:180px;font-family:'Noto Sans KR',sans-serif" placeholder="프로그램명 입력"></span>
+            <button class="del-card-btn" onclick="delExtraCard(this)">삭제</button>
+          </div>
+          <div class="course-card-grid">
+            <div class="field"><div class="field-label" style="border:none;padding:0">활동일시</div><input class="field-input" placeholder="활동일시"></div>
+            <div class="field"><div class="field-label" style="border:none;padding:0">활동장소</div><input class="field-input" placeholder="활동장소"></div>
+          </div>
+          <div class="field"><div class="field-label" style="border:none;padding:0">활동 내용</div><textarea class="field-textarea" placeholder="주제, 주요 활동 내용, 참여 후 느낀 점 등을 구체적으로 작성해주세요." rows="5"></textarea></div>
+        </div>
+      </div>
+      <button class="add-card-btn" onclick="addExtraCard()">+ 비교과 활동 추가</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- 제출 영역 -->
+<div class="submit-area">
+  <div class="submit-note">
+    본인은 위 내용이 사실임을 확인하며 성실히 작성하였음을 다짐합니다.
+  </div>
+  <div class="btn-group">
+    <button class="btn-print" onclick="window.print()">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5V2h8v3M3 10H1V6h12v4h-2M3 8h8v4H3V8z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      PDF로 저장
+    </button>
+    <button class="btn-submit" onclick="submitForm()">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      제출하기
+    </button>
+  </div>
+  <div class="submit-result" id="submitResult"></div>
+</div>
+
+<div class="form-footer">
+  © 고려대학교 차세대AI반도체특성화대학사업단. All rights reserved. · ✉ kistar@korea.ac.kr · 🌐 kistar.korea.ac.kr
+</div>
+
+</div>
+</div>
+
+<script>
+const EXEC_URL = 'https://script.google.com/macros/s/AKfycbwbcXNJ-g2nq9OGcYw2SVPp6U8ccymu4_PZjqUgtleXEQVmKD35s3p7SvCpAmR4P0mH/exec';
+let courseCardCount = 1;
+let extraCardCount = 1;
+
+(function(){
+  try {
+    const auth = JSON.parse(localStorage.getItem('kistar_auth') || 'null');
+    if (!auth || !auth.isAdmin) {
+      document.getElementById('access-denied').style.display = 'block';
+      return;
+    }
+    document.getElementById('main-content').style.display = 'block';
+    document.getElementById('f-name').value = auth.name || '';
+    document.getElementById('f-id').value = auth.studentId || '';
+    document.getElementById('f-dept').value = auth.dept || '';
+    const today = new Date();
+    document.getElementById('docDate').textContent =
+      today.getFullYear() + '.' + String(today.getMonth()+1).padStart(2,'0') + '.' + String(today.getDate()).padStart(2,'0');
+    document.getElementById('docWriter').textContent = auth.name || '';
+  } catch(e) {
+    document.getElementById('access-denied').style.display = 'block';
+  }
+})();
+
+function addCourseCard() {
+  courseCardCount++;
+  const div = document.createElement('div');
+  div.className = 'course-card';
+  div.innerHTML = `
+    <div class="course-card-title">
+      <span>교과 ${courseCardCount} — <input type="text" style="border:none;border-bottom:1px solid var(--border);outline:none;font-size:13px;font-weight:700;color:var(--navy);background:transparent;width:180px;font-family:'Noto Sans KR',sans-serif" placeholder="교과목명 입력"></span>
+      <button class="del-card-btn" onclick="delCourseCard(this)">삭제</button>
+    </div>
+    <div class="course-card-grid">
+      <div class="field"><div class="field-label" style="border:none;padding:0">담당교원</div><input class="field-input" placeholder="담당교원명"></div>
+      <div class="field"><div class="field-label" style="border:none;padding:0">강의장소</div><input class="field-input" placeholder="강의장소"></div>
+      <div class="field"><div class="field-label" style="border:none;padding:0">강의시간</div><input class="field-input" placeholder="강의시간"></div>
+      <div class="field"><div class="field-label" style="border:none;padding:0">강의주제</div><input class="field-input" placeholder="강의주제"></div>
+    </div>
+    <div class="field"><div class="field-label" style="border:none;padding:0">강의수강 전·후 달라진 점</div><textarea class="field-textarea" placeholder="수강 전과 후의 변화를 작성해주세요." rows="3"></textarea></div>
+    <div class="field"><div class="field-label" style="border:none;padding:0">한 학기 강의 요약</div><textarea class="field-textarea" placeholder="한 학기 동안 배운 내용을 요약해주세요." rows="3"></textarea></div>`;
+  document.getElementById('courseCards').appendChild(div);
+}
+
+function delCourseCard(btn) {
+  const cards = document.querySelectorAll('#courseCards .course-card');
+  if (cards.length > 1) btn.closest('.course-card').remove();
+}
+
+function addExtraCard() {
+  extraCardCount++;
+  const div = document.createElement('div');
+  div.className = 'extracurr-card';
+  div.innerHTML = `
+    <div class="extracurr-card-title">
+      <span>비교과 ${extraCardCount} — <input type="text" style="border:none;border-bottom:1px solid var(--border);outline:none;font-size:13px;font-weight:700;color:var(--accent);background:transparent;width:180px;font-family:'Noto Sans KR',sans-serif" placeholder="프로그램명 입력"></span>
+      <button class="del-card-btn" onclick="delExtraCard(this)">삭제</button>
+    </div>
+    <div class="course-card-grid">
+      <div class="field"><div class="field-label" style="border:none;padding:0">활동일시</div><input class="field-input" placeholder="활동일시"></div>
+      <div class="field"><div class="field-label" style="border:none;padding:0">활동장소</div><input class="field-input" placeholder="활동장소"></div>
+    </div>
+    <div class="field"><div class="field-label" style="border:none;padding:0">활동 내용</div><textarea class="field-textarea" placeholder="주제, 주요 활동 내용, 참여 후 느낀 점 등을 작성해주세요." rows="5"></textarea></div>`;
+  document.getElementById('extraCards').appendChild(div);
+}
+
+function delExtraCard(btn) {
+  const cards = document.querySelectorAll('#extraCards .extracurr-card');
+  if (cards.length > 1) btn.closest('.extracurr-card').remove();
+}
+
+function collectCourseData() {
+  const cards = document.querySelectorAll('#courseCards .course-card');
+  const result = [];
+  cards.forEach((card, i) => {
+    const inputs = card.querySelectorAll('input[type=text]');
+    const textareas = card.querySelectorAll('textarea');
+    result.push({
+      name: inputs[0].value,
+      teacher: inputs[1].value,
+      room: inputs[2].value,
+      time: inputs[3].value,
+      topic: inputs[4].value,
+      change: textareas[0].value,
+      summary: textareas[1].value,
+    });
+  });
+  return JSON.stringify(result);
+}
+
+function collectExtraData() {
+  const cards = document.querySelectorAll('#extraCards .extracurr-card');
+  const result = [];
+  cards.forEach(card => {
+    const inputs = card.querySelectorAll('input[type=text]');
+    const textarea = card.querySelector('textarea');
+    result.push({
+      name: inputs[0].value,
+      date: inputs[1].value,
+      place: inputs[2].value,
+      content: textarea ? textarea.value : '',
+    });
+  });
+  return JSON.stringify(result);
+}
+
+function submitForm() {
+  const sid = document.getElementById('f-id').value.trim();
+  const sname = document.getElementById('f-name').value.trim();
+  if (!sid || !sname) { showResult('error', '학번과 이름을 확인해주세요.'); return; }
+
+  const params = new URLSearchParams({
+    action: 'submitReport',
+    studentId: sid,
+    studentName: sname,
+    dept: document.getElementById('f-dept').value,
+    grade: document.getElementById('f-grade').value,
+    phone: document.getElementById('f-phone').value,
+    email: document.getElementById('f-email').value,
+    majorUnderstanding: document.getElementById('major-understanding').value,
+    practicalSkill: document.getElementById('practical-skill').value,
+    careerAwareness: document.getElementById('career-awareness').value,
+    futureStudy: document.getElementById('future-study').value,
+    futureCareer: document.getElementById('future-career').value,
+    courseActivities: collectCourseData(),
+    extraActivities: collectExtraData(),
+    semester: '2026-1',
+  });
+
+  showResult('success', '제출 중...');
+  fetch(EXEC_URL + '?' + params.toString())
+    .then(r => r.json())
+    .then(result => {
+      if (result.status === 'ok') {
+        showResult('success', '✅ 결과보고서가 제출되었습니다! (' + sname + ')');
+      } else {
+        showResult('error', '제출 실패: ' + JSON.stringify(result));
+      }
+    })
+    .catch(() => showResult('error', '네트워크 오류. 다시 시도해주세요.'));
+}
+
+function showResult(type, msg) {
+  const el = document.getElementById('submitResult');
+  el.className = 'submit-result show ' + type;
+  el.textContent = msg;
+}
+</script>
+</body>
+</html>
