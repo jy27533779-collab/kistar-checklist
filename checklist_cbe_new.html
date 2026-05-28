@@ -385,9 +385,38 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 
 .logout-btn{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:6px;border:0.5px solid rgba(255,255,255,.18);background:rgba(255,255,255,.05);color:rgba(255,255,255,.45);font-size:12px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;transition:all .15s;white-space:nowrap}
 .logout-btn:hover{border-color:rgba(200,57,43,.5);color:#f08070;background:rgba(200,57,43,.1)}
+
+/* 로그인 이름 바 */
+.login-bar{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:7px 16px;
+  background:rgba(11,31,58,0.93);backdrop-filter:blur(8px);
+  font-size:11px;color:rgba(255,255,255,.7);
+  box-shadow:0 1px 8px rgba(0,0,0,.2);
+}
+.login-bar-name{font-weight:700;color:#fff}
+.login-bar-back{
+  display:flex;align-items:center;gap:4px;
+  color:rgba(255,255,255,.6);text-decoration:none;
+  font-size:11px;transition:color .15s;
+}
+.login-bar-back:hover{color:#fff}
+body{padding-top:34px}
 </style>
 </head>
 <body>
+<!-- 로그인 이름 바 -->
+<div class="login-bar" id="loginBar" style="display:none">
+  <a href="./" class="login-bar-back">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+      <path d="M8 2L4 6l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    학과 선택
+  </a>
+  <span class="login-bar-name" id="loginBarName"></span>
+</div>
+
 
 <!-- 공식 배너 헤더 -->
 <div class="official-banner">
@@ -808,6 +837,19 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 
 </div>
 <script>
+  // 로그인 이름 바 표시
+  (function() {
+    try {
+      const auth = JSON.parse(localStorage.getItem('kistar_auth') || 'null');
+      if (auth && auth.name) {
+        const bar = document.getElementById('loginBar');
+        const nameEl = document.getElementById('loginBarName');
+        if (bar) bar.style.display = 'flex';
+        if (nameEl) nameEl.textContent = auth.name + '님 (' + (auth.dept || '') + ')';
+      }
+    } catch(e) {}
+  })();
+
   // ── 대문 통행증 체크 (직접 URL 접속 차단) ──
   (function() {
     try {

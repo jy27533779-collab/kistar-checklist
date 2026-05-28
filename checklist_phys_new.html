@@ -385,9 +385,38 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 
 .logout-btn{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:6px;border:0.5px solid rgba(255,255,255,.18);background:rgba(255,255,255,.05);color:rgba(255,255,255,.45);font-size:12px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;transition:all .15s;white-space:nowrap}
 .logout-btn:hover{border-color:rgba(200,57,43,.5);color:#f08070;background:rgba(200,57,43,.1)}
+
+/* 로그인 이름 바 */
+.login-bar{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:7px 16px;
+  background:rgba(11,31,58,0.93);backdrop-filter:blur(8px);
+  font-size:11px;color:rgba(255,255,255,.7);
+  box-shadow:0 1px 8px rgba(0,0,0,.2);
+}
+.login-bar-name{font-weight:700;color:#fff}
+.login-bar-back{
+  display:flex;align-items:center;gap:4px;
+  color:rgba(255,255,255,.6);text-decoration:none;
+  font-size:11px;transition:color .15s;
+}
+.login-bar-back:hover{color:#fff}
+body{padding-top:34px}
 </style>
 </head>
 <body>
+<!-- 로그인 이름 바 -->
+<div class="login-bar" id="loginBar" style="display:none">
+  <a href="./" class="login-bar-back">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+      <path d="M8 2L4 6l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    학과 선택
+  </a>
+  <span class="login-bar-name" id="loginBarName"></span>
+</div>
+
 
 <!-- 공식 배너 헤더 -->
 <div class="official-banner">
@@ -773,7 +802,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
   <rect x="146" y="424" width="8" height="8" rx="1" fill="#F8F7F4" stroke="#C8C6BE" stroke-width="0.4"/>
   <text x="157" y="432" font-size="7.5" fill="#9A9890" font-family="Noto Sans KR,sans-serif">전공선택</text>
   <rect x="22" y="440" width="90" height="15" rx="3" fill="#E8E5DC" stroke="#B4B2A9" stroke-width="0.5"/>
-  <text x="67" y="451" text-anchor="middle" font-size="8.0" fill="#3A3835" font-family="Noto Sans KR,sans-serif">전잠물리학및실험</text>
+  <text x="67" y="451" text-anchor="middle" font-size="8.0" fill="#3A3835" font-family="Noto Sans KR,sans-serif">전자물리학및실험</text>
   <rect x="118" y="440" width="90" height="15" rx="3" fill="#E8E5DC" stroke="#B4B2A9" stroke-width="0.5"/>
   <text x="163" y="451" text-anchor="middle" font-size="8.0" fill="#3A3835" font-family="Noto Sans KR,sans-serif">전자기학 1</text>
   <rect x="216" y="440" width="90" height="15" rx="3" fill="#E8E5DC" stroke="#B4B2A9" stroke-width="0.5"/>
@@ -805,6 +834,19 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 
 </div>
 <script>
+  // 로그인 이름 바 표시
+  (function() {
+    try {
+      const auth = JSON.parse(localStorage.getItem('kistar_auth') || 'null');
+      if (auth && auth.name) {
+        const bar = document.getElementById('loginBar');
+        const nameEl = document.getElementById('loginBarName');
+        if (bar) bar.style.display = 'flex';
+        if (nameEl) nameEl.textContent = auth.name + '님 (' + (auth.dept || '') + ')';
+      }
+    } catch(e) {}
+  })();
+
   // ── 대문 통행증 체크 (직접 URL 접속 차단) ──
   (function() {
     try {
@@ -982,7 +1024,7 @@ function toggleDiagram() { toggleDiag(1); }
   <div class="section-body">
     <div class="note-box">물리학과 기이수 전공과목 중 <strong>최대 6학점까지</strong> 융합전공 학점으로 중복 인정 — 6학점 도달 시 나머지 자동 비활성화</div>
     <div class="recog-cap-bar"><span>인정 학점</span><span id="recogCapLabel">0 / 6학점</span></div>
-    <div class="course-row" onclick="toggleRecog(this)" data-credit="3"><div class="checkbox"><svg width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l2.5 2.5L9 1" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div><span class="dept-tag tag-물">물</span><span class="course-name">전잠물리학및실험 <span class="course-sub">전공필수</span></span><span class="course-credit">3학점</span></div>
+    <div class="course-row" onclick="toggleRecog(this)" data-credit="3"><div class="checkbox"><svg width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l2.5 2.5L9 1" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div><span class="dept-tag tag-물">물</span><span class="course-name">전자물리학및실험 <span class="course-sub">전공필수</span></span><span class="course-credit">3학점</span></div>
     <div class="course-row" onclick="toggleRecog(this)" data-credit="3"><div class="checkbox"><svg width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l2.5 2.5L9 1" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div><span class="dept-tag tag-물">물</span><span class="course-name">전자기학 1 <span class="course-sub">전공필수</span></span><span class="course-credit">3학점</span></div>
     <div class="course-row" onclick="toggleRecog(this)" data-credit="3"><div class="checkbox"><svg width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l2.5 2.5L9 1" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div><span class="dept-tag tag-물">물</span><span class="course-name">전자기학 2 <span class="course-sub">전공필수</span></span><span class="course-credit">3학점</span></div>
     <div class="course-row" onclick="toggleRecog(this)" data-credit="3"><div class="checkbox"><svg width="10" height="8" viewBox="0 0 10 8"><path d="M1 4l2.5 2.5L9 1" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div><span class="dept-tag tag-물">물</span><span class="course-name">양자역학 1 <span class="course-sub">전공필수</span></span><span class="course-credit">3학점</span></div>
