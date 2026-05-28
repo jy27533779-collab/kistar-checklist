@@ -366,6 +366,42 @@ function submitForm() {
   const sname = document.getElementById('f-name').value.trim();
   if (!sid || !sname) { showResult('error', '학번과 이름을 확인해주세요.'); return; }
 
+  // 소프트 경고: 최소 글자수 체크
+  const warnings = [];
+  const longFields = [
+    { id: 'major-understanding', label: '전공 이해도', min: 100 },
+    { id: 'practical-skill',     label: '실무 역량', min: 100 },
+    { id: 'career-awareness',    label: '진로 인식', min: 100 },
+    { id: 'future-study',        label: '향후 학습 계획', min: 100 },
+    { id: 'future-career',       label: '향후 진로 계획', min: 100 },
+  ];
+  longFields.forEach(f => {
+    const val = (document.getElementById(f.id).value || '').trim();
+    if (val.length < f.min) {
+      warnings.push(`· ${f.label} (현재 ${val.length}자 / 최소 ${f.min}자 권장)`);
+    }
+  });
+  // 교과 카드 내용 체크
+  document.querySelectorAll('#courseCards .course-card').forEach((card, i) => {
+    const textareas = card.querySelectorAll('textarea');
+    textareas.forEach(ta => {
+      if (ta.value.trim().length > 0 && ta.value.trim().length < 30) {
+        warnings.push(`· 교과 ${i+1} 내용 (현재 ${ta.value.trim().length}자 / 최소 30자 권장)`);
+      }
+    });
+  });
+  if (warnings.length > 0) {
+    const msg = '다음 항목의 내용이 너무 짧습니다. 더 구체적으로 작성해주세요.
+
+'
+      + warnings.join('
+')
+      + '
+
+그래도 제출하시겠습니까?';
+    if (!confirm(msg)) return;
+  }
+
   const params = new URLSearchParams({
     action: 'submitReport',
     studentId: sid,
