@@ -14,7 +14,8 @@
   --green:#2d7a4f;--green-light:#edf7f1;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:0 0 4rem}
+body,input,textarea,select,button{font-family:'Malgun Gothic','맑은 고딕','Noto Sans KR',sans-serif;color:var(--text)}
+body{background:var(--bg);min-height:100vh;padding:0 0 4rem}
 #access-denied{display:none;max-width:400px;margin:4rem auto;text-align:center;padding:2rem;background:var(--surface);border-radius:16px;border:1px solid var(--border)}
 .top-bar{background:rgba(11,31,58,0.95);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
 .top-bar-left{display:flex;align-items:center;gap:10px}
@@ -34,6 +35,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .section-body{padding:16px 20px}
 .info-table{width:100%;border-collapse:collapse;font-size:13px}
 .info-table td{border:1px solid var(--border);padding:8px 12px}
+.info-table .lbl{background:var(--surface2);font-weight:600;width:80px;text-align:center;color:var(--text2)}
 .info-table td:first-child,.info-table td:nth-child(3){background:var(--surface2);font-weight:600;width:80px;text-align:center;color:var(--text2)}
 .info-table input{width:100%;border:none;outline:none;font-size:13px;font-family:'Noto Sans KR',sans-serif;background:transparent;color:var(--text)}
 .field{margin-bottom:1.2rem}
@@ -126,20 +128,45 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
   <div class="section-body">
     <table class="info-table">
       <tr>
-        <td>성 명</td><td><input type="text" id="f-name" placeholder="자동입력"></td>
-        <td>학 번</td><td><input type="text" id="f-id" placeholder="자동입력"></td>
+        <td class="lbl">성 명</td><td><input type="text" id="f-name" placeholder="자동입력"></td>
+        <td class="lbl">학 번</td><td><input type="text" id="f-id" placeholder="자동입력"></td>
       </tr>
       <tr>
-        <td>대 학</td><td><input type="text" id="f-univ" value="고려대학교" readonly style="color:var(--text3)"></td>
-        <td>학과(부)</td><td><input type="text" id="f-dept" placeholder="자동입력"></td>
+        <td class="lbl">대 학</td><td><input type="text" id="f-univ" value="고려대학교" readonly style="color:var(--text3)"></td>
+        <td class="lbl">학과(부)</td>
+        <td>
+          <select id="f-dept" style="width:100%;border:none;outline:none;font-size:13px;background:transparent;font-family:inherit;cursor:pointer">
+            <option value="">선택 (관리자: 학과 선택)</option>
+            <option value="신소재공학부">신소재공학부</option>
+            <option value="전기전자공학부">전기전자공학부</option>
+            <option value="화공생명공학과">화공생명공학과</option>
+            <option value="기계공학부">기계공학부</option>
+            <option value="물리학과">물리학과</option>
+          </select>
+        </td>
       </tr>
       <tr>
-        <td>학 년</td><td><input type="text" id="f-grade" placeholder="예: 3학년"></td>
-        <td>학 기</td><td><input type="text" id="f-semester" value="2026학년도 1학기" readonly style="color:var(--text3)"></td>
+        <td class="lbl">학 년</td>
+        <td>
+          <select id="f-grade" style="width:100%;border:none;outline:none;font-size:13px;background:transparent;font-family:inherit;cursor:pointer">
+            <option value="">선택</option>
+            <option value="2학년">2학년</option>
+            <option value="3학년">3학년</option>
+            <option value="4학년">4학년</option>
+          </select>
+        </td>
+        <td class="lbl">학 기</td>
+        <td>
+          <select id="f-semester" style="width:100%;border:none;outline:none;font-size:13px;background:transparent;font-family:inherit;cursor:pointer">
+            <option value="">선택</option>
+            <option value="1학기">1학기</option>
+            <option value="2학기">2학기</option>
+          </select>
+        </td>
       </tr>
       <tr>
-        <td>연락처</td><td><input type="text" id="f-phone" placeholder="010-0000-0000"></td>
-        <td>메 일</td><td><input type="text" id="f-email" placeholder="이메일 주소"></td>
+        <td class="lbl">연락처</td><td><input type="text" id="f-phone" placeholder="010-0000-0000"></td>
+        <td class="lbl">메 일</td><td><input type="text" id="f-email" placeholder="이메일 주소"></td>
       </tr>
     </table>
   </div>
@@ -176,6 +203,52 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
       <div class="field-label">향후 진로 계획 <span class="field-hint">※ 향후 진로 방향과 차세대반도체 융합전공 이수가 본인에게 갖는 의미</span></div>
       <textarea class="field-textarea" id="future-career" placeholder="향후 진로 방향과 융합전공 이수의 의미를 작성해주세요." rows="4"></textarea>
     </div>
+  </div>
+</div>
+
+
+<!-- 3-1. 인턴십 및 현장실습 활동 -->
+<div class="form-section">
+  <div class="section-title"><div class="section-num" style="background:rgba(255,255,255,.2)">+</div>인턴십 및 현장실습 활동 <span style="font-size:11px;font-weight:400;opacity:.7">(해당자만 작성)</span></div>
+  <div class="section-body">
+
+    <div class="field">
+      <div class="field-label">활동 유형 <span class="field-hint">복수 선택 가능</span></div>
+      <div class="check-group" style="margin-bottom:12px">
+        <label class="check-item"><input type="checkbox" name="internDone" value="기업 인턴십(국내)"> 기업 인턴십(국내)</label>
+        <label class="check-item"><input type="checkbox" name="internDone" value="기업 인턴십(해외)"> 기업 인턴십(해외)</label>
+        <label class="check-item"><input type="checkbox" name="internDone" value="대학 연구실 인턴"> 대학 연구실 인턴</label>
+        <label class="check-item"><input type="checkbox" name="internDone" value="산학협력 프로젝트"> 산학협력 프로젝트</label>
+        <label class="check-item"><input type="checkbox" name="internDone" value="기업 견학"> 기업 견학</label>
+        <label class="check-item"><input type="checkbox" name="internDone" value="해당 없음"> 해당 없음</label>
+      </div>
+    </div>
+
+    <div id="internDetailWrap">
+      <div class="intern-card" style="background:var(--surface2);border:0.5px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px">
+        <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between">
+          <span>활동 ① — <input type="text" style="border:none;border-bottom:1px solid var(--border);outline:none;font-size:13px;font-weight:700;color:var(--navy);background:transparent;width:180px;font-family:inherit" placeholder="기관명/기업명 입력"></span>
+          <button class="del-card-btn" onclick="delInternCard(this)">삭제</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+          <div class="field"><div class="field-label" style="border:none;padding:0">활동 기간</div><input class="field-input" placeholder="예: 2025.07 ~ 2025.08"></div>
+          <div class="field"><div class="field-label" style="border:none;padding:0">활동 유형</div>
+            <select class="field-input" style="cursor:pointer">
+              <option value="">선택</option>
+              <option>기업 인턴십(국내)</option>
+              <option>기업 인턴십(해외)</option>
+              <option>대학 연구실 인턴</option>
+              <option>산학협력 프로젝트</option>
+              <option>기업 견학</option>
+            </select>
+          </div>
+        </div>
+        <div class="field"><div class="field-label" style="border:none;padding:0">담당 업무 / 연구 내용</div><textarea class="field-textarea" placeholder="담당한 업무나 연구 내용을 구체적으로 작성해주세요." rows="3"></textarea></div>
+        <div class="field"><div class="field-label" style="border:none;padding:0">배운 점 및 느낀 점</div><textarea class="field-textarea" placeholder="활동을 통해 배운 점, 느낀 점, 역량 변화 등을 작성해주세요." rows="3"></textarea></div>
+      </div>
+    </div>
+    <button class="add-card-btn" onclick="addInternCard()">+ 활동 추가</button>
+
   </div>
 </div>
 
@@ -235,7 +308,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
     본인은 위 내용이 사실임을 확인하며 성실히 작성하였음을 다짐합니다.
   </div>
   <div class="btn-group">
-    <button class="btn-print" onclick="window.print()">
+    <button class="btn-print" id="btn-pdf" style="display:none" onclick="window.print()">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5V2h8v3M3 10H1V6h12v4h-2M3 8h8v4H3V8z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       PDF로 저장
     </button>
@@ -267,9 +340,13 @@ window.addEventListener('DOMContentLoaded', function() {
       return;
     }
     document.getElementById('main-content').style.display = 'block';
+    if (auth.isAdmin) { const pdf = document.getElementById('btn-pdf'); if(pdf) pdf.style.display = 'flex'; }
     document.getElementById('f-name').value = auth.name || '';
     document.getElementById('f-id').value = auth.studentId || '';
-    document.getElementById('f-dept').value = auth.dept || '';
+    const deptSelect = document.getElementById('f-dept');
+    if (auth.dept && ['신소재공학부','전기전자공학부','화공생명공학과','기계공학부','물리학과'].includes(auth.dept)) {
+      deptSelect.value = auth.dept;
+    }
     const today = new Date();
     document.getElementById('docDate').textContent =
       today.getFullYear() + '.' + String(today.getMonth()+1).padStart(2,'0') + '.' + String(today.getDate()).padStart(2,'0');
@@ -410,6 +487,8 @@ function submitForm() {
     futureCareer: document.getElementById('future-career').value,
     courseActivities: collectCourseData(),
     extraActivities: collectExtraData(),
+    internActivities: collectInternData(),
+    internTypes: Array.from(document.querySelectorAll('input[name="internDone"]:checked')).map(e=>e.value).join(', '),
     semester: '2026-1',
   });
 
@@ -431,6 +510,55 @@ function showResult(type, msg) {
   el.className = 'submit-result show ' + type;
   el.textContent = msg;
 }
+
+  let internCardCount = 1;
+  function addInternCard() {
+    internCardCount++;
+    const div = document.createElement('div');
+    div.className = 'intern-card';
+    div.style.cssText = 'background:var(--surface2);border:0.5px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px';
+    div.innerHTML = `
+      <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between">
+        <span>활동 ${internCardCount} — <input type="text" style="border:none;border-bottom:1px solid var(--border);outline:none;font-size:13px;font-weight:700;color:var(--navy);background:transparent;width:180px;font-family:inherit" placeholder="기관명/기업명 입력"></span>
+        <button class="del-card-btn" onclick="delInternCard(this)">삭제</button>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+        <div class="field"><div class="field-label" style="border:none;padding:0">활동 기간</div><input class="field-input" placeholder="예: 2025.07 ~ 2025.08"></div>
+        <div class="field"><div class="field-label" style="border:none;padding:0">활동 유형</div>
+          <select class="field-input" style="cursor:pointer">
+            <option value="">선택</option>
+            <option>기업 인턴십(국내)</option>
+            <option>기업 인턴십(해외)</option>
+            <option>대학 연구실 인턴</option>
+            <option>산학협력 프로젝트</option>
+            <option>기업 견학</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><div class="field-label" style="border:none;padding:0">담당 업무 / 연구 내용</div><textarea class="field-textarea" placeholder="담당한 업무나 연구 내용을 구체적으로 작성해주세요." rows="3"></textarea></div>
+      <div class="field"><div class="field-label" style="border:none;padding:0">배운 점 및 느낀 점</div><textarea class="field-textarea" placeholder="활동을 통해 배운 점, 느낀 점, 역량 변화 등을 작성해주세요." rows="3"></textarea></div>`;
+    document.getElementById('internDetailWrap').appendChild(div);
+  }
+  function delInternCard(btn) {
+    const cards = document.querySelectorAll('.intern-card');
+    if (cards.length > 1) btn.closest('.intern-card').remove();
+  }
+  function collectInternData() {
+    const cards = document.querySelectorAll('.intern-card');
+    const result = [];
+    cards.forEach(card => {
+      const inputs = card.querySelectorAll('input[type=text]');
+      const selects = card.querySelectorAll('select');
+      const textareas = card.querySelectorAll('textarea');
+      const org = inputs[0] ? inputs[0].value.trim() : '';
+      const period = inputs[1] ? inputs[1].value.trim() : '';
+      const type = selects[0] ? selects[0].value : '';
+      const work = textareas[0] ? textareas[0].value.trim() : '';
+      const learn = textareas[1] ? textareas[1].value.trim() : '';
+      if (org || work) result.push({org, period, type, work, learn});
+    });
+    return JSON.stringify(result);
+  }
 </script>
 </body>
 </html>

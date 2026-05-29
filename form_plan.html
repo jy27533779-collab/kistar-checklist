@@ -234,6 +234,27 @@ body{background:var(--bg);min-height:100vh;padding:0 0 4rem}
         <td class="lbl">연락처</td><td><input type="text" id="f-phone" placeholder="010-0000-0000"></td>
         <td class="lbl">이메일</td><td><input type="text" id="f-email" placeholder="이메일 주소"></td>
       </tr>
+      <tr>
+        <td class="lbl">졸업예정</td>
+        <td colspan="3">
+          <div style="display:flex;align-items:center;gap:8px">
+            <select id="f-grad-year" style="border:none;outline:none;font-size:13px;background:transparent;font-family:inherit;cursor:pointer">
+              <option value="">년도 선택</option>
+              <option value="2025">2025년</option>
+              <option value="2026">2026년</option>
+              <option value="2027">2027년</option>
+              <option value="2028">2028년</option>
+              <option value="2029">2029년</option>
+            </select>
+            <select id="f-grad-month" style="border:none;outline:none;font-size:13px;background:transparent;font-family:inherit;cursor:pointer">
+              <option value="">월 선택</option>
+              <option value="2월">2월 (전기)</option>
+              <option value="8월">8월 (후기)</option>
+            </select>
+            <span style="font-size:11px;color:var(--text3)">예: 2027년 2월 졸업 예정</span>
+          </div>
+        </td>
+      </tr>
     </table>
   </div>
 </div>
@@ -657,6 +678,8 @@ function submitForm() {
     action: 'submitPlan',
     studentId: sid, studentName: sname,
     dept: document.getElementById('f-dept').value,
+    gradYear: document.getElementById('f-grad-year').value,
+    gradMonth: document.getElementById('f-grad-month').value,
     grade: document.getElementById('f-grade').value,
     phone: document.getElementById('f-phone').value,
     email: document.getElementById('f-email').value,
